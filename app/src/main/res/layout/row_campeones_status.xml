@@ -19,8 +19,9 @@
         android:id="@+id/container_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:selectableItemBackground"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
