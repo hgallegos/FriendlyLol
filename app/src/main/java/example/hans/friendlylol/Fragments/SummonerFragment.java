@@ -9,11 +9,12 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -21,33 +22,24 @@ import android.widget.Toast;
 
 import com.robrua.orianna.api.core.AsyncRiotAPI;
 import com.robrua.orianna.api.core.RiotAPI;
-import com.robrua.orianna.store.Cache;
-import com.robrua.orianna.store.CloseableIterator;
-import com.robrua.orianna.store.DataStore;
 import com.robrua.orianna.type.api.Action;
-import com.robrua.orianna.type.core.OriannaObject;
 import com.robrua.orianna.type.core.champion.ChampionStatus;
 import com.robrua.orianna.type.core.common.Region;
 import com.robrua.orianna.type.core.staticdata.Champion;
 import com.robrua.orianna.type.exception.APIException;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
-import example.hans.friendlylol.ChampionAdapter;
 import example.hans.friendlylol.ChampionStatusAdapter;
 import example.hans.friendlylol.DetailChampion;
 import example.hans.friendlylol.MainActivity;
 import example.hans.friendlylol.R;
 
 /**
- * Created by hans6 on 19-06-2016.
+ * Created by hans6 on 20-06-2016.
  */
-public class ChampionsFragment extends Fragment {
-
+public class SummonerFragment extends Fragment {
     private String version;
     private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";
 
@@ -56,9 +48,9 @@ public class ChampionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         //Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_champions, container, false);
+        final View view = inflater.inflate(R.layout.fragment_summoner, container, false);
 
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Campeones");
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Invocadores");
 
         mLayout = (RelativeLayout) view.findViewById(R.id.mainLayout);
         AsyncRiotAPI.setRegion(Region.LAS);
@@ -80,43 +72,37 @@ public class ChampionsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         if(isAdded()){
-            recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),4,GridLayoutManager.VERTICAL,false));
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),5,GridLayoutManager.VERTICAL,false));
         }
 
 
-        AsyncRiotAPI.getChampions(new Action<List<Champion>>() {
+        AsyncRiotAPI.getChampionStatuses(new Action<Map<Champion, ChampionStatus>>() {
             @Override
             public void handle(APIException exception) {
                 Log.e("Error campeones", "ni idea");
             }
 
             @Override
-            public void perform(final List<Champion> responseData) {
-                final List<Champion> champions = new ArrayList<Champion>(responseData);
+            public void perform(final Map<Champion, ChampionStatus> responseData) {
 
-                Collections.sort(champions, new Comparator<Champion>() {
-                    @Override
-                    public int compare(Champion c1, Champion c2) {
-                        return c1.getName().compareTo(c2.getName());
-                    }
-                });
+
+                Log.e("a ver", ""+responseData.size());
                 version = RiotAPI.getVersions().get(0);
                 if(isAdded()){
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ChampionAdapter championAdapter = new ChampionAdapter(getActivity().getApplicationContext(),champions, version);
-                            recyclerView.setAdapter(championAdapter);
-                            recyclerView.addOnItemTouchListener(new MainFragment.RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new MainActivity.ClickListener() {
+                            ChampionStatusAdapter championAdapterStatus =
+                                    new ChampionStatusAdapter(getActivity().getApplicationContext(),new ArrayList<ChampionStatus>(responseData.values()), version);
+                            recyclerView.setAdapter(championAdapterStatus);
+                            recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new MainActivity.ClickListener() {
                                 @Override
                                 public void onClick(View view, int position) {
-                                    Champion champion = champions.get(position);
-                                    Toast.makeText(getActivity().getApplicationContext(), champion.getName() + " is selected!", Toast.LENGTH_SHORT).show();
+                                    ChampionStatus championStatus = new ArrayList<>(responseData.values()).get(position);
+                                    Toast.makeText(getActivity().getApplicationContext(), championStatus.getChampion().getName() + " is selected!", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getActivity().getApplicationContext(), DetailChampion.class);
-                                    intent.putExtra("championID", champion.getID());
+                                    intent.putExtra("championID", championStatus.getChampionID());
                                     startActivity(intent);
-
-
                                 }
 
                                 @Override
@@ -129,7 +115,7 @@ public class ChampionsFragment extends Fragment {
                 }
 
             }
-        });
+        },true);
     }
 
     private void snackBarPermiso(){
@@ -173,4 +159,54 @@ public class ChampionsFragment extends Fragment {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
+
+    public interface ClickListener {
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        private GestureDetector gestureDetector;
+        private MainActivity.ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final MainActivity.ClickListener clickListener) {
+            this.clickListener = clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clickListener != null) {
+                        clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildAdapterPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
 }
+
