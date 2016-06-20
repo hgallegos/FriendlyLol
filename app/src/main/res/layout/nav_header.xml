@@ -9,8 +9,8 @@
         android:id="@+id/nav_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/taliyah_0"
-        android:scaleType="centerCrop" />
+        android:background="@drawable/taliyah_0"
+        android:scaleType="center" />
 
 
 </FrameLayout>

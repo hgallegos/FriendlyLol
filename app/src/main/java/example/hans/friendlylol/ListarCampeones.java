@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ListarCampeones extends BaseActivity {
+public class ListarCampeones extends AppCompatActivity {
 
     private String version;
     private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";

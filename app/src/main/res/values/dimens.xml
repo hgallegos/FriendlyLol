@@ -23,9 +23,10 @@
     <dimen name="font_xlarge">20sp</dimen>
     <dimen name="font_large">18sp</dimen>
     <dimen name="font_medium">16sp</dimen>
-    <dimen name="font_small">10sp</dimen>
-    <dimen name="font_xsmall">8sp</dimen>
+    <dimen name="font_small">9sp</dimen>
+    <dimen name="font_xsmall">7sp</dimen>
 
     <dimen name="card_corner_radius">5dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
