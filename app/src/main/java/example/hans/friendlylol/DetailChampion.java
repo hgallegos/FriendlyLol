@@ -21,6 +21,7 @@ public class DetailChampion extends AppCompatActivity {
     private TextView nombreChampion;
     private ImageView imagenFullCampeon;
 
+    private static final String URL_SPLASH = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/";
     private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";
 
     private Toolbar toolbar;
@@ -55,13 +56,13 @@ public class DetailChampion extends AppCompatActivity {
                 }
 
                 @Override
-                public void perform(Champion responseData) {
+                public void perform(final Champion responseData) {
                     getSupportActionBar().setTitle(responseData.getName());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Glide.with(getApplicationContext())
-                                    .load(R.drawable.taliyah_0)
+                                    .load(URL_SPLASH+""+responseData.getName()+"_0.jpg")
                                     .into(imagenFullCampeon);
                         }
                     });
