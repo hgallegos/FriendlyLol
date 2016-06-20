@@ -106,7 +106,7 @@ public class ChampionsFragment extends Fragment {
                             recyclerView.addOnItemTouchListener(new MainFragment.RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new MainActivity.ClickListener() {
                                 @Override
                                 public void onClick(View view, int position) {
-                                    Champion champion = responseData.get(position);
+                                    Champion champion = champions.get(position);
                                     Toast.makeText(getActivity().getApplicationContext(), champion.getName() + " is selected!", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getActivity().getApplicationContext(), DetailChampion.class);
                                     intent.putExtra("championID", champion.getID());
