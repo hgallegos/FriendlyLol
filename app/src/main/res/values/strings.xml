@@ -16,5 +16,6 @@
     <string name="no_permission">Acceso a internet no concedido</string>
     <string name="no_internet">Problema de conexión</string>
     <string name="try_again">Volver a intentar</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Ajustes</string>
+    <string name="search_hint">Nombre de invocador</string>
 </resources>

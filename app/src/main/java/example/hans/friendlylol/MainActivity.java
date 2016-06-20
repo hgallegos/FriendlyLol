@@ -41,6 +41,7 @@ import java.util.Map;
 
 import example.hans.friendlylol.Fragments.ChampionsFragment;
 import example.hans.friendlylol.Fragments.MainFragment;
+import example.hans.friendlylol.Fragments.SummonerFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -124,6 +125,15 @@ public class MainActivity extends AppCompatActivity {
                                     setFragment(1);
                                 }
                                 return true;
+                            case R.id.item_navigation_drawer_Summoners:
+                                menuItem.setChecked(true);
+                                drawerLayout.closeDrawer(GravityCompat.START);
+                                if(actionBar.getTitle().equals("Invocadores")){
+                                    return true;
+                                }else{
+                                    setFragment(2);
+                                }
+                                return true;
                             case R.id.item_navigation_drawer_settings:
                                 menuItem.setChecked(true);
                                 Toast.makeText(MainActivity.this, "Launching " + menuItem.getTitle().toString(), Toast.LENGTH_SHORT).show();
@@ -158,6 +168,13 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction = fragmentManager.beginTransaction();
                 ChampionsFragment championsFragment = new ChampionsFragment();
                 fragmentTransaction.replace(R.id.fragment, championsFragment);
+                fragmentTransaction.commit();
+                break;
+            case 2:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                SummonerFragment summonerFragment = new SummonerFragment();
+                fragmentTransaction.replace(R.id.fragment, summonerFragment);
                 fragmentTransaction.commit();
                 break;
         }

@@ -56,11 +56,11 @@ public class SummonerFragment extends Fragment {
         AsyncRiotAPI.setRegion(Region.LAS);
         AsyncRiotAPI.setAPIKey(API_KEY);
 
-        verificarInternet(view);
+        //verificarInternet(view);
         return view;
     }
 
-    public void verificarInternet(View view){
+   /* public void verificarInternet(View view){
         if(isOnline()){
             listarCampeones(view);
         }else{
@@ -207,6 +207,6 @@ public class SummonerFragment extends Fragment {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }
+    }*/
 }
 
