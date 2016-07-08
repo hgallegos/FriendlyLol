@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    >
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
         android:id="@+id/nav_image_view"
@@ -11,6 +10,5 @@
         android:layout_height="match_parent"
         android:background="@drawable/taliyah_0"
         android:scaleType="center" />
-
 
 </FrameLayout>

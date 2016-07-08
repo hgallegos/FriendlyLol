@@ -5,18 +5,18 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -31,7 +31,6 @@ import com.robrua.orianna.api.core.AsyncRiotAPI;
 import com.robrua.orianna.api.core.RiotAPI;
 import com.robrua.orianna.type.api.Action;
 import com.robrua.orianna.type.core.champion.ChampionStatus;
-import com.robrua.orianna.type.core.common.Region;
 import com.robrua.orianna.type.core.staticdata.Champion;
 import com.robrua.orianna.type.exception.APIException;
 
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.item_navigation_drawer_champions:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                if(actionBar.getTitle().equals("Camepeones")){
+                                if(actionBar.getTitle().equals("Campeones")){
                                     return true;
                                 }else{
                                     setFragment(1);
