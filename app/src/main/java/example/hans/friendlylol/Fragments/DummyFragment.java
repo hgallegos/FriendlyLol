@@ -10,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.robrua.orianna.api.core.AsyncRiotAPI;
-import com.robrua.orianna.type.core.common.Region;
-
 import example.hans.friendlylol.DetailAdapter;
 import example.hans.friendlylol.R;
 
@@ -24,7 +21,6 @@ public class DummyFragment extends Fragment {
     DetailAdapter adapter;
 
     //private String version;
-    private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
@@ -34,7 +30,6 @@ public class DummyFragment extends Fragment {
 
     @SuppressLint("ValidFragment")
     public DummyFragment(int color) {
-        //this.idCampeon = idCampeon;
         this.color = color;
     }
 
@@ -42,9 +37,6 @@ public class DummyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //String strtext = this.getArguments().getString("nombreCampeon");
         View view = inflater.inflate(R.layout.dummy_fragment, container, false);
-
-        AsyncRiotAPI.setAPIKey(API_KEY);
-        AsyncRiotAPI.setRegion(Region.LAS);
 
         final FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.dummyfrag_bg);
         frameLayout.setBackgroundColor(color);
@@ -55,11 +47,15 @@ public class DummyFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        //<String> listaDeDatos = new ArrayList<String>();
+        //list<String> listaDeDatos = new ArrayList<String>();
         //for (int i = 0; i < VersionModel.data.length; i++) {
         //    listaDeDatos.add(VersionModel.data[i]);
         //}
 
+        //List<String> datosCampeon = new ArrayList<>();
+        //adapter = new DetailAdapter(datosCampeon);
+
+        // Dentro de ..:: DetailAdapter ::.. hay un array[] fijo que ingresa datos para mostrar (no se utiliza List<String>)
         adapter = new DetailAdapter();
         recyclerView.setAdapter(adapter);
         return view;

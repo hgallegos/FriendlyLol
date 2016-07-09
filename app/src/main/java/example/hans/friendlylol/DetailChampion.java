@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example.hans.friendlylol.Fragments.DummyFragment;
+import example.hans.friendlylol.Fragments.ResumenFragment;
 
 public class DetailChampion extends AppCompatActivity {
     private Champion champion;
@@ -36,7 +37,7 @@ public class DetailChampion extends AppCompatActivity {
     private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";
 
     private Toolbar toolbar;
-    Bundle bundleAenviar;
+    long idCampeon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +94,9 @@ public class DetailChampion extends AppCompatActivity {
             }, bundle.getLong("championID"));
         }//fin if
 
-        bundleAenviar = new Bundle();
-        bundleAenviar.putString("nombreCampeon", champion+" probando");
+        idCampeon = bundle.getLong("championID");
 
+        //esta funcion no es necesaria, solo muestra toast para saber donde estoy
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -128,18 +129,19 @@ public class DetailChampion extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        //DummyFragment prueba = new DummyFragment();
-        //prueba.setArguments(bundleAenviar);
+        /* A la clase DummyFragment le paso un entero (puedo pasarle la id del campeon), en este caso un color (es el color del background del frag)
+        pero dentro de la clase se llama al arreglo con los datos que deseo mostrar */
 
-        //adapter.addFrag(prueba, "Resumen");
+        // DEBO HACER UN ..:: new fragmento(int idCampeon) ::.. PARA CADA TAB, ASI TRAIGO LOS DATOS ASINCRONOS
         adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Resumen");
-        adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Oponentes & Tips");
+        adapter.addFrag(new ResumenFragment(getResources().getColor(R.color.button_material_dark), idCampeon), "Oponentes & Tips");
         adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Habilidades");
         adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Skins");
         viewPager.setAdapter(adapter);
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
+        // AQUI SOLO ORGANISO LOS FRAGMENTOS A MOSTRAR EN CADA TAB
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
