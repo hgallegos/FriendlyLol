@@ -11,6 +11,7 @@ import android.widget.TextView;
  * Created by Matias on 07-07-16.
  * MANEJA UN ..:: STRING[] ::..
  */
+
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
     //private String[] mDataset;
     private String[] mDataset = {

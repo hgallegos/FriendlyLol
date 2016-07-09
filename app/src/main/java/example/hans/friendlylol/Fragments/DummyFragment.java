@@ -16,6 +16,7 @@ import example.hans.friendlylol.R;
 /**
  * Created by Matias on 07-07-16.
  */
+
 public class DummyFragment extends Fragment {
     int color;
     DetailAdapter adapter;

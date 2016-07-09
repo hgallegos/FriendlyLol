@@ -14,6 +14,7 @@ import java.util.List;
  * Created by Matias on 08-07-16.
  * MANEJA UN ..:: LIST<STRING> ::..
  */
+
 public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHolder> {
     private List<String> listaDeDatos = new ArrayList<>();
 

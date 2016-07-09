@@ -84,6 +84,7 @@ public class ResumenFragment extends Fragment {
         //    listaDeDatos.add(VersionModel.data[i]);
         //}
 
+
         adapter = new DetalleAdapter(listaDeDatos);
         recyclerView.setAdapter(adapter);
         return view;
