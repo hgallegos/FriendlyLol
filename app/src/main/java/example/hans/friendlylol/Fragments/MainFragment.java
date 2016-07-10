@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,12 +29,8 @@ import com.robrua.orianna.type.core.staticdata.Champion;
 import com.robrua.orianna.type.exception.APIException;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
-import example.hans.friendlylol.ChampionAdapter;
 import example.hans.friendlylol.ChampionStatusAdapter;
 import example.hans.friendlylol.DetailChampion;
 import example.hans.friendlylol.MainActivity;

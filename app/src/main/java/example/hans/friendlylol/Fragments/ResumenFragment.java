@@ -17,41 +17,41 @@ import com.robrua.orianna.type.core.common.Region;
 import com.robrua.orianna.type.core.staticdata.Champion;
 import com.robrua.orianna.type.exception.APIException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.net.ResponseCache;
 
+import example.hans.friendlylol.DetailAdapter;
 import example.hans.friendlylol.DetalleAdapter;
 import example.hans.friendlylol.R;
 
 /**
- * Created by Matias on 08-07-16.
+ * Created by Matias on 07-07-16.
  */
+
 public class ResumenFragment extends Fragment {
     int color;
-    long idCampeon;
-    private List<String> listaDeDatos = new ArrayList<>();
     DetalleAdapter adapter;
 
-    private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";
+    //private String version;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+    private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";
 
     public ResumenFragment() {
         //Constructor
     }
 
     @SuppressLint("ValidFragment")
-    public ResumenFragment(int color, long idCampeon) {
+    public ResumenFragment(int color) {
         this.color = color;
-        this.idCampeon = idCampeon;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dummy_fragment, container, false);
-
+        //String strtext = this.getArguments().getString("nombreCampeon");
         AsyncRiotAPI.setAPIKey(API_KEY);
         AsyncRiotAPI.setRegion(Region.LAS);
+
+        View view = inflater.inflate(R.layout.dummy_fragment, container, false);
 
         final FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.dummyfrag_bg);
         frameLayout.setBackgroundColor(color);
@@ -62,31 +62,48 @@ public class ResumenFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        //final List<String> listaDeDatos = new List<String>;
-        AsyncRiotAPI.getChampionByID(new Action<Champion>() {
-            @Override
-            public void handle(APIException exception) {
-                Log.e("Error campeones", "ni idea");
-            }
+        Bundle bundle = this.getArguments();
 
-            @Override
-            public void perform(Champion responseData) {
-                listaDeDatos = (ArrayList)responseData.getAllyTips();
-//                for (int i = 0; i < responseData.getAllyTips().size(); i++) {
-//                    listaDeDatos.add(responseData.getAllyTips().get(i).toString());
-//                }
-            }
-        }, idCampeon);
+        if(bundle != null){
+            AsyncRiotAPI.getChampionByID(new Action<Champion>() {
+                @Override
+                public void handle(APIException exception) {
+                    Log.e("Error", "ni idea");
+                }
 
-        // PRUEBA CON LIST<STRING> ... AQUI SE GUARDA EN LA LISTA LOS DATOS DEl ARREGLO QUE SE ENCUENTRA EN LA CLASE VersionModel
-        //List<String> listaDeDatos = new List<String>;
+                @Override
+                public void perform(final Champion responseData) {
+                    //algunas veces de daba error, no siempre pero esto lo solucionaba, no me acuerdo porque xD
+                    if(isAdded()){
+                        /*Lo de interfaz debe ir en el thread de la interfaz
+                        con el metodo runOnUiThread se logra
+                        el getActivity() se usa solo en los fragment, si llamas al metodo
+                        run... en una acitvity normal no es necesario*/
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter = new DetalleAdapter(responseData.getAllyTips());
+                                recyclerView.setAdapter(adapter);
+                            }
+                        });
+                    }
+
+                }
+            }, bundle.getLong("ChampionID"));
+        }
+
+        //list<String> listaDeDatos = new ArrayList<String>();
         //for (int i = 0; i < VersionModel.data.length; i++) {
         //    listaDeDatos.add(VersionModel.data[i]);
         //}
 
+        //List<String> datosCampeon = new ArrayList<>();
+        //adapter = new DetailAdapter(datosCampeon);
 
-        adapter = new DetalleAdapter(listaDeDatos);
-        recyclerView.setAdapter(adapter);
+        // Dentro de ..:: DetailAdapter ::.. hay un array[] fijo que ingresa datos para mostrar (no se utiliza List<String>)
+        //adapter = new DetailAdapter();
+        //recyclerView.setAdapter(adapter);
+
         return view;
     }
 }

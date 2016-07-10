@@ -29,6 +29,7 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHold
             super(v);
             cardItem = (CardView) itemView.findViewById(R.id.card_view);
             informacion = (TextView) itemView.findViewById(R.id.info_texto);
+            //le cambie el color al texto dentro de card_detail, solo me mostraba el card en blanco al principio
         }
     }
 

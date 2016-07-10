@@ -49,13 +49,7 @@ public class DetailChampion extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //  TABS
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.htab_viewpager);
-        setupViewPager(viewPager);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.htab_tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        //  FIN-TABS
 
 
         TypedValue typedValueColorPrimaryDark = new TypedValue();
@@ -68,6 +62,8 @@ public class DetailChampion extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if(bundle != null) {
+
+            idCampeon = bundle.getLong("championID");
             AsyncRiotAPI.setAPIKey(API_KEY);
             AsyncRiotAPI.setRegion(Region.LAS);
 
@@ -91,10 +87,19 @@ public class DetailChampion extends AppCompatActivity {
                     });
 
                 }
-            }, bundle.getLong("championID"));
+            }, idCampeon);
         }//fin if
 
-        idCampeon = bundle.getLong("championID");
+        //esto tenia que ir después de obtner el id, o sino estaba enviando un id que aun no existia
+        //  TABS
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.htab_viewpager);
+        setupViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.htab_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        //  FIN-TABS
+
+        //idCampeon = bundle.getLong("championID");
 
         //esta funcion no es necesaria, solo muestra toast para saber donde estoy
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -103,9 +108,12 @@ public class DetailChampion extends AppCompatActivity {
                 viewPager.setCurrentItem(tab.getPosition());
                 switch (tab.getPosition()) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), champion.getName()+" 1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), champion.getName()+" Id"+idCampeon, Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
+                        //es raro que puedas obtener el campeon aqui
+                        //aún así si intentas obtener cualquier cosa que esta dentro del response, en alguna de parte
+                        //de la intefaz principal no funciona, hazlo dentro del response del Async...
                         Toast.makeText(getApplicationContext(), champion.getName()+" 2", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
@@ -134,7 +142,14 @@ public class DetailChampion extends AppCompatActivity {
 
         // DEBO HACER UN ..:: new fragmento(int idCampeon) ::.. PARA CADA TAB, ASI TRAIGO LOS DATOS ASINCRONOS
         adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Resumen");
-        adapter.addFrag(new ResumenFragment(getResources().getColor(R.color.button_material_dark), idCampeon), "Oponentes & Tips");
+
+        //considero que la mejor manera de traspasar info es por el metodo Bundle
+        Bundle bundle = new Bundle();
+        bundle.putLong("ChampionID", idCampeon);
+
+        ResumenFragment resumenFragment = new ResumenFragment(getResources().getColor(R.color.button_material_dark));
+        resumenFragment.setArguments(bundle);
+        adapter.addFrag(resumenFragment, "Oponentes & Tips");
         adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Habilidades");
         adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Skins");
         viewPager.setAdapter(adapter);

@@ -47,6 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:fitsSystemWindows="true"
+            app:expandedTitleMarginStart="?attr/actionBarSize"
+            app:expandedTitleMarginEnd="64dp"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
