@@ -36,6 +36,7 @@ public class DetalleStringAdapter extends RecyclerView.Adapter<DetalleStringAdap
     @Override
     public void onBindViewHolder(DetalleStringAdapter.ViewHolder holder, int position) {
         holder.informacion.setText(Html.fromHtml(info));
+        // la info se entrega como formato html, por lo que tengo que convertirla
     }
 
     @Override

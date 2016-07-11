@@ -13,7 +13,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.robrua.orianna.api.core.AsyncRiotAPI;
@@ -27,6 +26,7 @@ import java.util.List;
 
 import example.hans.friendlylol.Fragments.ResumenFragment;
 import example.hans.friendlylol.Fragments.SkillsFragment;
+import example.hans.friendlylol.Fragments.SkinsFragment;
 import example.hans.friendlylol.Fragments.TipsFragment;
 
 public class DetailChampion extends AppCompatActivity {
@@ -65,6 +65,7 @@ public class DetailChampion extends AppCompatActivity {
         if(bundle != null) {
 
             idCampeon = bundle.getLong("championID");
+            // de la misma forma (bundle) pasar el nombre, para obtener el correcto en ingles
             AsyncRiotAPI.setAPIKey(API_KEY);
             AsyncRiotAPI.setRegion(Region.LAS);
 
@@ -77,6 +78,10 @@ public class DetailChampion extends AppCompatActivity {
                 @Override
                 public void perform(final Champion responseData) {
                     champion = responseData;
+                    String nombre = responseData.getName();
+                    String nombreSinSignos = nombre.replaceAll("\\W","");
+                    String nombreSinEspaciosSignos = nombreSinSignos.replaceAll("\\s","");
+
                     getSupportActionBar().setTitle(responseData.getName());
                     runOnUiThread(new Runnable() {
                         @Override
@@ -109,19 +114,20 @@ public class DetailChampion extends AppCompatActivity {
                 viewPager.setCurrentItem(tab.getPosition());
                 switch (tab.getPosition()) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), champion.getName()+" - Id: "+idCampeon, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), champion.getName()+" - Id: "+idCampeon, Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         //es raro que puedas obtener el campeon aqui
                         //aún así si intentas obtener cualquier cosa que esta dentro del response, en alguna de parte
                         //de la intefaz principal no funciona, hazlo dentro del response del Async...
-                        Toast.makeText(getApplicationContext(), champion.getName()+" 2", Toast.LENGTH_SHORT).show();
+
+                        //Toast.makeText(getApplicationContext(), champion.getName()+" 2", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        Toast.makeText(getApplicationContext(), champion.getName()+" 3", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), champion.getName()+" 3", Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
-                        Toast.makeText(getApplicationContext(), champion.getName()+" 4", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), champion.getName()+" 4", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -146,19 +152,25 @@ public class DetailChampion extends AppCompatActivity {
         pero dentro de la clase se llama al arreglo con los datos que deseo mostrar */
         // DEBO HACER UN ..:: new fragmento(int idCampeon) ::.. PARA CADA TAB, ASI TRAIGO LOS DATOS ASINCRONOS
 
+        // Fragmento Resumen
         ResumenFragment resumenFragment = new ResumenFragment(getResources().getColor(R.color.button_material_dark));
         resumenFragment.setArguments(bundle);
         adapter.addFrag(resumenFragment, "Resumen");
 
+        // Fragmento Tips
         TipsFragment tipsFragment = new TipsFragment(getResources().getColor(R.color.button_material_dark));
         tipsFragment.setArguments(bundle);
         adapter.addFrag(tipsFragment, "Oponentes & Tips");
 
+        // Fragmento habilidades
         SkillsFragment skillsFragment = new SkillsFragment(getResources().getColor(R.color.button_material_dark));
         skillsFragment.setArguments(bundle);
         adapter.addFrag(skillsFragment, "Habilidades");
 
-//        adapter.addFrag(tipsFragment, "Skins");
+        // Fragmento skins
+        SkinsFragment skinsFragment = new SkinsFragment(getResources().getColor(R.color.button_material_dark));
+        skinsFragment.setArguments(bundle);
+        adapter.addFrag(skinsFragment, "Skins");
 
         viewPager.setAdapter(adapter);
     }
