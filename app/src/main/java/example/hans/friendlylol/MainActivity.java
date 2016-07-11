@@ -1,7 +1,13 @@
 package example.hans.friendlylol;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -15,6 +21,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -358,6 +365,44 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
+    private void createNotificacion(long when, String data){
+        String notificationTitle = "ROTACIÓN SEMANAL DE CAMPEONES FreeToPlay";
+        String notificationContent = "Hoy se renuevan los personajes jugables GRATIS";
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        int smalIcon = R.mipmap.ic_launcher;
+        //String notificationData = "El dato es: "+data;
+
+        Intent intent = new Intent(getApplicationContext(), NotificationDetailsActivity.class);
+        //intent.putExtra(NOTIFICATION_DATA, notificationData);
+
+        intent.setData(Uri.parse("content://"+when));
+        PendingIntent pendingIntent = null;
+        pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(
+                getApplicationContext())
+                .setWhen(when)
+                .setContentText(notificationContent)
+                .setContentTitle(notificationTitle)
+                .setSmallIcon(smalIcon)
+                .setAutoCancel(true)
+                .setTicker(notificationTitle)
+                .setLargeIcon(largeIcon)
+                .setDefaults(Notification.DEFAULT_VIBRATE|Notification.DEFAULT_SOUND)
+                .setContentIntent(pendingIntent)
+                .setLights(Color.RED,2,2)
+                ;
+
+        Notification notification = notificationBuilder.build();
+        notificationManager.notify((int) when, notification);
+    }
+
+
 }
 
 

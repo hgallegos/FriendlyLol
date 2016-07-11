@@ -51,7 +51,7 @@ public class MainFragment extends Fragment {
         //Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Friendly Lol");
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Rotación Semanal");
 
         mLayout = (RelativeLayout) view.findViewById(R.id.mainLayout);
         AsyncRiotAPI.setRegion(Region.LAS);

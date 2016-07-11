@@ -65,7 +65,7 @@ public class DetailChampion extends AppCompatActivity {
         if(bundle != null) {
 
             idCampeon = bundle.getLong("championID");
-            // de la misma forma (bundle) pasar el nombre, para obtener el correcto en ingles
+            // de la misma forma (bundle) pasar el nombre, para obtener
             AsyncRiotAPI.setAPIKey(API_KEY);
             AsyncRiotAPI.setRegion(Region.LAS);
 
