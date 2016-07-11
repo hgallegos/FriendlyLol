@@ -9,7 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.robrua.orianna.api.core.AsyncRiotAPI;
 import com.robrua.orianna.type.api.Action;
@@ -17,10 +18,8 @@ import com.robrua.orianna.type.core.common.Region;
 import com.robrua.orianna.type.core.staticdata.Champion;
 import com.robrua.orianna.type.exception.APIException;
 
-import java.net.ResponseCache;
-
-import example.hans.friendlylol.DetailAdapter;
 import example.hans.friendlylol.DetalleAdapter;
+import example.hans.friendlylol.DetalleStringAdapter;
 import example.hans.friendlylol.R;
 
 /**
@@ -29,11 +28,18 @@ import example.hans.friendlylol.R;
 
 public class ResumenFragment extends Fragment {
     int color;
+    DetalleStringAdapter adapterStringApodo;
     DetalleAdapter adapter;
+    DetalleStringAdapter adapterString;
+//    DetalleAdapter adapterString;
 
     //private String version;
+    private RecyclerView recyclerViewApodo;
+    private LinearLayoutManager linearLayoutManagerApodo;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+    private RecyclerView recyclerView2;
+    private LinearLayoutManager linearLayoutManager2;
     private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";
 
     public ResumenFragment() {
@@ -53,8 +59,24 @@ public class ResumenFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.dummy_fragment, container, false);
 
-        final FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.dummyfrag_bg);
-        frameLayout.setBackgroundColor(color);
+        //final FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.dummyfrag_bg);
+        //frameLayout.setBackgroundColor(color);
+        final RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.dummyfrag_bg);
+        relativeLayout.setBackgroundColor(color);
+
+        /* APODO */
+        final TextView titleApodo = (TextView) view.findViewById(R.id.tituloApodo);
+        titleApodo.setText("Apodo :");
+
+        recyclerViewApodo = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableviewApodo);
+        recyclerViewApodo.setHasFixedSize(true);
+
+        linearLayoutManagerApodo = new LinearLayoutManager(getActivity().getBaseContext());
+        recyclerViewApodo.setLayoutManager(linearLayoutManagerApodo);
+
+        /* LISTA DE CLASES */
+        final TextView title = (TextView) view.findViewById(R.id.titulo);
+        title.setText("Clase :");
 
         recyclerView = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableview);
         recyclerView.setHasFixedSize(true);
@@ -62,8 +84,17 @@ public class ResumenFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        Bundle bundle = this.getArguments();
+        /* SABIDURIA */
+        final TextView title2 = (TextView) view.findViewById(R.id.titulo2);
+        title2.setText("Sabiduría : ");
 
+        recyclerView2 = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableview2);
+        recyclerView2.setHasFixedSize(true);
+
+        linearLayoutManager2 = new LinearLayoutManager(getActivity().getBaseContext());
+        recyclerView2.setLayoutManager(linearLayoutManager2);
+
+        Bundle bundle = this.getArguments();
         if(bundle != null){
             AsyncRiotAPI.getChampionByID(new Action<Champion>() {
                 @Override
@@ -73,17 +104,19 @@ public class ResumenFragment extends Fragment {
 
                 @Override
                 public void perform(final Champion responseData) {
-                    //algunas veces de daba error, no siempre pero esto lo solucionaba, no me acuerdo porque xD
                     if(isAdded()){
-                        /*Lo de interfaz debe ir en el thread de la interfaz
-                        con el metodo runOnUiThread se logra
-                        el getActivity() se usa solo en los fragment, si llamas al metodo
-                        run... en una acitvity normal no es necesario*/
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter = new DetalleAdapter(responseData.getAllyTips());
+                                // Title -> apodo del personaje
+                                adapterStringApodo = new DetalleStringAdapter(responseData.getTitle());
+                                recyclerViewApodo.setAdapter(adapterStringApodo);
+                                // Tags -> Clase
+                                adapter = new DetalleAdapter(responseData.getTags());
                                 recyclerView.setAdapter(adapter);
+                                // Blurb -> Reseumen de Sabiduria, Lore -> Sabiduria completa
+                                adapterString = new DetalleStringAdapter(responseData.getLore());
+                                recyclerView2.setAdapter(adapterString);
                             }
                         });
                     }
@@ -92,19 +125,6 @@ public class ResumenFragment extends Fragment {
             }, bundle.getLong("ChampionID"));
         }
 
-        //list<String> listaDeDatos = new ArrayList<String>();
-        //for (int i = 0; i < VersionModel.data.length; i++) {
-        //    listaDeDatos.add(VersionModel.data[i]);
-        //}
-
-        //List<String> datosCampeon = new ArrayList<>();
-        //adapter = new DetailAdapter(datosCampeon);
-
-        // Dentro de ..:: DetailAdapter ::.. hay un array[] fijo que ingresa datos para mostrar (no se utiliza List<String>)
-        //adapter = new DetailAdapter();
-        //recyclerView.setAdapter(adapter);
-
         return view;
     }
 }
-

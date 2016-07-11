@@ -1,6 +1,5 @@
 package example.hans.friendlylol;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +22,11 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView cardItem;
+        //CardView cardItem;
         TextView informacion;
         public ViewHolder(View v) {
             super(v);
-            cardItem = (CardView) itemView.findViewById(R.id.card_view);
+            //cardItem = (CardView) itemView.findViewById(R.id.card_view);
             informacion = (TextView) itemView.findViewById(R.id.info_texto);
             //le cambie el color al texto dentro de card_detail, solo me mostraba el card en blanco al principio
         }

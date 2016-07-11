@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 /**
  * Created by Matias on 07-07-16.
- * MANEJA UN ..:: STRING[] ::..
+ * MANEJA UN ..:: STRING[] ::..                 ESTE SE DEBE BORRAR MAS TARDE, ES SOLO PRUEBA
  */
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
     //private String[] mDataset;
     private String[] mDataset = {
-            "Cupcake Cupcake Cupcake Cupcake Cupcake Cupcake Cupcake",
+            "ARRAY ..... Cupcake Cupcake Cupcake Cupcake Cupcake Cupcake Cupcake",
             "Donut bla bla este es un texto de prueba para ver como se comporta el cardView aaaaaaaaaaaaaaaaaaaaaaaah",
             "Eclair",
             "Froyo",
@@ -37,7 +37,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         public ViewHolder(View v) {
             super(v);
             //mTextView = v;
-            cardItem = (CardView) itemView.findViewById(R.id.card_view);
+            //cardItem = (CardView) itemView.findViewById(R.id.card_view);
             informacion = (TextView) itemView.findViewById(R.id.info_texto);
         }
     }

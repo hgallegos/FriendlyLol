@@ -25,8 +25,8 @@ import com.robrua.orianna.type.exception.APIException;
 import java.util.ArrayList;
 import java.util.List;
 
-import example.hans.friendlylol.Fragments.DummyFragment;
 import example.hans.friendlylol.Fragments.ResumenFragment;
+import example.hans.friendlylol.Fragments.TipsFragment;
 
 public class DetailChampion extends AppCompatActivity {
     private Champion champion;
@@ -108,7 +108,7 @@ public class DetailChampion extends AppCompatActivity {
                 viewPager.setCurrentItem(tab.getPosition());
                 switch (tab.getPosition()) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), champion.getName()+" Id"+idCampeon, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), champion.getName()+" - Id: "+idCampeon, Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         //es raro que puedas obtener el campeon aqui
@@ -137,21 +137,25 @@ public class DetailChampion extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        /* A la clase DummyFragment le paso un entero (puedo pasarle la id del campeon), en este caso un color (es el color del background del frag)
-        pero dentro de la clase se llama al arreglo con los datos que deseo mostrar */
-
-        // DEBO HACER UN ..:: new fragmento(int idCampeon) ::.. PARA CADA TAB, ASI TRAIGO LOS DATOS ASINCRONOS
-        adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Resumen");
-
         //considero que la mejor manera de traspasar info es por el metodo Bundle
         Bundle bundle = new Bundle();
         bundle.putLong("ChampionID", idCampeon);
 
+        /* A la clase DummyFragment le paso un entero (puedo pasarle la id del campeon), en este caso un color (es el color del background del frag)
+        pero dentro de la clase se llama al arreglo con los datos que deseo mostrar */
+        // DEBO HACER UN ..:: new fragmento(int idCampeon) ::.. PARA CADA TAB, ASI TRAIGO LOS DATOS ASINCRONOS
+
         ResumenFragment resumenFragment = new ResumenFragment(getResources().getColor(R.color.button_material_dark));
         resumenFragment.setArguments(bundle);
-        adapter.addFrag(resumenFragment, "Oponentes & Tips");
-        adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Habilidades");
-        adapter.addFrag(new DummyFragment(getResources().getColor(R.color.button_material_dark)), "Skins");
+        adapter.addFrag(resumenFragment, "Resumen");
+
+        TipsFragment tipsFragment = new TipsFragment(getResources().getColor(R.color.button_material_dark));
+        tipsFragment.setArguments(bundle);
+        adapter.addFrag(tipsFragment, "Oponentes & Tips");
+
+//        adapter.addFrag(tipsFragment, "Habilidades");
+//        adapter.addFrag(tipsFragment, "Skins");
+
         viewPager.setAdapter(adapter);
     }
 
