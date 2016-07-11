@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Nombre Summoner -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/resumen_summoner">
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view_summoner_name"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            card_view:cardCornerRadius="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/image_summoner"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"/>
+
+                <TextView
+                    android:id="@+id/summoner_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_xxlarge"
+                    android:layout_toRightOf="@+id/image_summoner"
+                    android:textStyle="bold"
+                    android:paddingLeft="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/summoner_level"
+                    android:layout_toRightOf="@+id/image_summoner"
+                    android:layout_below="@+id/summoner_name"
+                    android:paddingLeft="5dp"/>
+
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+    <!-- Promedio -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/summoner_promedio"
+        android:layout_below="@+id/resumen_summoner">
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view_promedio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            card_view:cardCornerRadius="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Promedios"
+                android:id="@+id/promedio"
+                android:textSize="@dimen/font_large"
+                android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/kdaSuma"
+                    android:layout_below="@+id/promedio"
+                    android:layout_alignStart="@+id/promedio"
+                    android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/kdaSuma"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/kda"
+                    android:text="KDA"
+                    android:textSize="@dimen/font_small"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/torretas"
+                    android:paddingStart="55dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_below="@+id/promedio"
+                    android:layout_toEndOf="@+id/promedio" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/torretas"
+                    android:layout_toRightOf="@+id/kda"
+                    android:paddingLeft="50dp"
+                    android:text="Torretas destruidas"
+                    android:textSize="@dimen/font_small"
+                    android:id="@+id/textView" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/subditos"
+
+                    android:layout_alignTop="@+id/torretas"
+                    android:layout_toEndOf="@+id/torretas"
+                    android:paddingLeft="70dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/subditos"
+
+                    android:text="Subditos"
+                    android:textSize="@dimen/font_small"
+                    android:layout_toEndOf="@+id/textView"
+                    android:id="@+id/textView2"
+                    android:paddingLeft="50dp" />
+
+
+
+
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+    <!-- Mas Jugados -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/summoner_played"
+        android:layout_below="@+id/summoner_promedio">
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view_played"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            card_view:cardCornerRadius="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Más jugados"
+                    android:id="@+id/played"
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold"/>
+
+
+
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+    <!-- Liga Summoner -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/summoner_nivel"
+        android:layout_below="@+id/summoner_played">
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view_nivel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            card_view:cardCornerRadius="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Liga"
+                    android:id="@+id/liga"
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>

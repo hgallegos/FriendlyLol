@@ -37,5 +37,14 @@ dependencies {
     //api orianna
     compile 'com.robrua:orianna-android:2.4.3'
 
+    //Event bus otto
+    compile 'com.squareup:otto:1.3.8'
+
+    //Retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 
 }

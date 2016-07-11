@@ -40,6 +40,7 @@ import java.util.Map;
 
 import example.hans.friendlylol.Fragments.ChampionsFragment;
 import example.hans.friendlylol.Fragments.MainFragment;
+import example.hans.friendlylol.Fragments.StatisticFragment;
 import example.hans.friendlylol.Fragments.SummonerFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -133,6 +134,15 @@ public class MainActivity extends AppCompatActivity {
                                     setFragment(2);
                                 }
                                 return true;
+                            case R.id.item_navigation_drawer_statistics:
+                                menuItem.setChecked(true);
+                                drawerLayout.closeDrawer((GravityCompat.START));
+                                if(actionBar.getTitle().equals("Estadisticas")){
+                                    return true;
+                                }else{
+                                    setFragment(3);
+                                }
+                                return true;
                             case R.id.item_navigation_drawer_settings:
                                 menuItem.setChecked(true);
                                 Toast.makeText(MainActivity.this, "Launching " + menuItem.getTitle().toString(), Toast.LENGTH_SHORT).show();
@@ -176,6 +186,12 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.fragment, summonerFragment);
                 fragmentTransaction.commit();
                 break;
+            case 3:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                StatisticFragment statisticFragment = new StatisticFragment();
+                fragmentTransaction.replace(R.id.fragment, statisticFragment);
+                fragmentTransaction.commit();
         }
     }
 
