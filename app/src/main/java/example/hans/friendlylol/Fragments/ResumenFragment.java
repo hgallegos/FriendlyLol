@@ -29,18 +29,24 @@ import example.hans.friendlylol.R;
 public class ResumenFragment extends Fragment {
     int color;
     DetalleStringAdapter adapterStringApodo;
-    DetalleAdapter adapter;
-    DetalleStringAdapter adapterString;
-//    DetalleAdapter adapterString;
+    DetalleAdapter adapter; //lista de clases
+    DetalleStringAdapter adapterStringInfo;
+    DetalleStringAdapter adapterString; //texto de sabiduria
 
     //private String version;
     private RecyclerView recyclerViewApodo;
     private LinearLayoutManager linearLayoutManagerApodo;
+
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+
+    private RecyclerView recyclerViewInfo;
+    private LinearLayoutManager linearLayoutManagerInfo;
+
     private RecyclerView recyclerView2;
     private LinearLayoutManager linearLayoutManager2;
     private static final String API_KEY = "4821637b-1fef-4651-832f-f4177883cfa5";
+
 
     public ResumenFragment() {
         //Constructor
@@ -67,30 +73,32 @@ public class ResumenFragment extends Fragment {
         /* APODO */
         final TextView titleApodo = (TextView) view.findViewById(R.id.tituloApodo);
         titleApodo.setText("Apodo :");
-
         recyclerViewApodo = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableviewApodo);
         recyclerViewApodo.setHasFixedSize(true);
-
         linearLayoutManagerApodo = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerViewApodo.setLayoutManager(linearLayoutManagerApodo);
 
         /* LISTA DE CLASES */
         final TextView title = (TextView) view.findViewById(R.id.titulo);
         title.setText("Clase :");
-
         recyclerView = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableview);
         recyclerView.setHasFixedSize(true);
-
         linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        /* INFORMACION */
+        final TextView titleInfo = (TextView) view.findViewById(R.id.tituloInfo);
+        titleInfo.setText("Información :");
+        recyclerViewInfo = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableviewInfo);
+        recyclerViewInfo.setHasFixedSize(true);
+        linearLayoutManagerInfo = new LinearLayoutManager(getActivity().getBaseContext());
+        recyclerViewInfo.setLayoutManager(linearLayoutManagerInfo);
 
         /* SABIDURIA */
         final TextView title2 = (TextView) view.findViewById(R.id.titulo2);
         title2.setText("Sabiduría : ");
-
         recyclerView2 = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableview2);
         recyclerView2.setHasFixedSize(true);
-
         linearLayoutManager2 = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerView2.setLayoutManager(linearLayoutManager2);
 
@@ -114,6 +122,9 @@ public class ResumenFragment extends Fragment {
                                 // Tags -> Clase
                                 adapter = new DetalleAdapter(responseData.getTags());
                                 recyclerView.setAdapter(adapter);
+                                // Info
+                                adapterStringInfo = new DetalleStringAdapter(responseData.getInfo().toString());
+                                recyclerViewInfo.setAdapter(adapterStringInfo);
                                 // Blurb -> Reseumen de Sabiduria, Lore -> Sabiduria completa
                                 adapterString = new DetalleStringAdapter(responseData.getLore());
                                 recyclerView2.setAdapter(adapterString);

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example.hans.friendlylol.Fragments.ResumenFragment;
+import example.hans.friendlylol.Fragments.SkillsFragment;
 import example.hans.friendlylol.Fragments.TipsFragment;
 
 public class DetailChampion extends AppCompatActivity {
@@ -153,7 +154,10 @@ public class DetailChampion extends AppCompatActivity {
         tipsFragment.setArguments(bundle);
         adapter.addFrag(tipsFragment, "Oponentes & Tips");
 
-//        adapter.addFrag(tipsFragment, "Habilidades");
+        SkillsFragment skillsFragment = new SkillsFragment(getResources().getColor(R.color.button_material_dark));
+        skillsFragment.setArguments(bundle);
+        adapter.addFrag(skillsFragment, "Habilidades");
+
 //        adapter.addFrag(tipsFragment, "Skins");
 
         viewPager.setAdapter(adapter);
