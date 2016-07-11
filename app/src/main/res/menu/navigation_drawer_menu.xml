@@ -15,6 +15,10 @@
             android:id="@+id/item_navigation_drawer_Summoners"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="Invocadores"/>
+        <item
+            android:id="@+id/item_navigation_drawer_statistics"
+            android:icon="@drawable/ic_timeline_black_24dp"
+            android:title="Estadisticas"/>
     </group>
 
     <item android:title="">
